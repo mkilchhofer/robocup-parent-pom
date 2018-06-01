@@ -7,15 +7,19 @@
     <groupId>info.kilchhofer.bfh</groupId>
     <artifactId>robocup-parent-pom</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>20180602.3</version>
+
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.compilerArgument>-Xlint:all</maven.compiler.compilerArgument>
-        <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
-        <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
+        <bintray.repo>robocup</bintray.repo>
+        <bintray.package>robocup-parent-pom</bintray.package>
+        <bintray.subject>mkilchhofer</bintray.subject>
+
+        <java.version>1.8</java.version>
+        <maven-compiler.version>3.7.0</maven-compiler.version>
+        <junit.version>5.2.0</junit.version>
     </properties>
+
     <repositories>
         <repository>
             <id>jitpack.io</id>
@@ -32,6 +36,7 @@
             </snapshots>
         </repository>
     </repositories>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -39,44 +44,6 @@
                 <artifactId>ch.quantasy.mqtt.gateway</artifactId>
                 <version>e5020e94d4</version>
             </dependency>
-            <dependency>
-                <groupId>ch.hftm</groupId>
-                <artifactId>lidar</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-api</artifactId>
-                <version>5.1.0</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-engine</artifactId>
-                <version>5.2.0</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.vintage</groupId>
-                <artifactId>junit-vintage-engine</artifactId>
-                <version>5.1.0</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.platform</groupId>
-                <artifactId>junit-platform-launcher</artifactId>
-                <version>1.1.0</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.platform</groupId>
-                <artifactId>junit-platform-runner</artifactId>
-                <version>1.1.0</version>
-                <scope>test</scope>
-            </dependency>
-
-
 
             <dependency>
                 <groupId>org.eclipse.paho</groupId>
@@ -84,32 +51,78 @@
                 <version>1.2.0</version>
             </dependency>
             <dependency>
-                <groupId>io.moquette</groupId>
-                <artifactId>moquette-broker</artifactId>
-                <version>0.11</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
                 <groupId>com.googlecode.lanterna</groupId>
                 <artifactId>lanterna</artifactId>
                 <version>3.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
-                <version>2.11.0</version>
             </dependency>
             <dependency>
                 <groupId>commons-cli</groupId>
                 <artifactId>commons-cli</artifactId>
                 <version>1.4</version>
             </dependency>
+
+            <!-- Logging -->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>2.11.0</version>
+            </dependency>
+
+            <!-- Test Dependencies -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.moquette</groupId>
+                <artifactId>moquette-broker</artifactId>
+                <version>0.11</version>
+                <scope>test</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
+    <scm>
+        <connection>scm:git:git@github.com:mkilchhofer/robocup-parent-pom.git</connection>
+        <url>scm:git:git@github.com:mkilchhofer/robocup-parent-pom.git</url>
+        <developerConnection>scm:git:git@github.com:mkilchhofer/robocup-parent-pom.git</developerConnection>
+    </scm>
+
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <releaseProfiles>releases</releaseProfiles>
+                </configuration>
+            </plugin>
+        </plugins>
+
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <showDeprecation>true</showDeprecation>
+                        <showWarnings>true</showWarnings>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
@@ -177,4 +190,11 @@
             </plugins>
         </pluginManagement>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>bintray-mkilchhofer-robocup</id>
+            <name>mkilchhofer-robocup</name>
+            <url>https://api.bintray.com/maven/${bintray.subject}/${bintray.repo}/${bintray.package}/;publish=1</url>
+        </repository>
+    </distributionManagement>
 </project>
