@@ -7,9 +7,14 @@
     <groupId>info.kilchhofer.bfh</groupId>
     <artifactId>robocup-parent-pom</artifactId>
     <packaging>pom</packaging>
-    <version>20180602.4</version>
+    <version>${revision}</version>
 
     <properties>
+        <!--
+            Define revision as fallback, normally defined via env variable.
+            (eg. MAVEN_OPTS=-Drevision=$(date +%Y%m%d)-SNAPSHOT)
+        -->
+        <revision>1.0-SNAPSHOT</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <bintray.repo>robocup</bintray.repo>
         <bintray.package>robocup-parent-pom</bintray.package>
