@@ -27,10 +27,6 @@
 
     <repositories>
         <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-        <repository>
             <id>bintray</id>
             <url>https://jcenter.bintray.com</url>
             <releases>
@@ -45,9 +41,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.github.mkilchhofer</groupId>
+                <groupId>ch.quantasy</groupId>
                 <artifactId>ch.quantasy.mqtt.gateway</artifactId>
-                <version>e5020e94d4</version>
+                <version>20180525.0</version>
             </dependency>
 
             <dependency>
